@@ -1,15 +1,16 @@
 import argparse
 import datetime
 import matplotlib.pyplot as plt
+from models import engine, Gilfoyle
+from sqlalchemy.orm import sessionmaker
+import pandas as pd
 
-# Function to simulate fetching data from a database
-def fetch_data(start_date, end_date):
-    # Replace this with actual database query logic
-    # Simulating data for demonstration purposes
-    data = {
-        'dates': [start_date + datetime.timedelta(days=i) for i in range((end_date - start_date).days + 1)],
-        'values': [i * 10 for i in range((end_date - start_date).days + 1)]
-    }
+Session = sessionmaker(bind=engine)
+session = Session()
+
+def fetch_data(from_date, to_date):
+    data = session.query(Gilfoyle).filter(Gilfoyle.date>=from_date, Gilfoyle.date<=to_date).all()
+    data = pd.DataFrame.from_records([row.to_dict() for row in data])
     return data
 
 # Function to create and display a line graph
@@ -39,21 +40,21 @@ def save_report(dates, values, aggregated_value):
 
 def main():
     # Set up command line argument parser
-    parser = argparse.ArgumentParser(description='Data Analysis Script')
-    parser.add_argument('--from', '-f', dest='start_date', type=str, help='Start date in DD-MM-YYYY format')
-    parser.add_argument('--to', '-t', dest='end_date', type=str, help='End date in DD-MM-YYYY format')
-    parser.add_argument('--save', action='store_true', help='Save the report (graph and aggregated result)')
+    parser = argparse.ArgumentParser(description='Gilfoyle grapher')
+    parser.add_argument('--from', '-f', dest='from_date', type=str, help='Start date in DD-MM-YYYY format')
+    parser.add_argument('--to', '-t', dest='to_date', type=str, help='End date in DD-MM-YYYY format')
+    parser.add_argument('--save', action='store_true', help='Save the report as ______')
     
     # Parse command line arguments
     args = parser.parse_args()
-    start_date = datetime.datetime.strptime(args.start_date, '%d-%m-%Y').date()
-    end_date = datetime.datetime.strptime(args.end_date, '%d-%m-%Y').date()
+    from_date = datetime.datetime.strptime(args.from_date, '%d-%m-%Y').date()
+    to_date = datetime.datetime.strptime(args.to_date, '%d-%m-%Y').date()
 
     # Fetch data from the database
-    data = fetch_data(start_date, end_date)
+    data = fetch_data(from_date, to_date)
 
     # Create and display the graph
-    create_graph(data['dates'], data['values'])
+    create_graph(data)
 
     # Aggregate values
     aggregated_value = aggregate_values(data['values'])
