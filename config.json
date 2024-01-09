@@ -1,0 +1,8 @@
+{
+    "frequency": 1,
+    
+    "ramAlertLevel": 90,
+    "batteryAlertLevel": 10,
+    "tempAlertLevel": 90,
+    "rpmAlertLevel": 3000
+}
