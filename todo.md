@@ -19,3 +19,16 @@
 - [ ] About
 - [ ] Make it flexible. Test with dual fan system, other makes etc
 - [ ] Make alerts non blocking
+- [ ] gitignore is not working
+- [ ] Write a script to keep the daemon upto date
+- [ ] Create a config python file to find own path
+- [ ] Move config.json to /etc/gilfoyle/config.json
+
+---
+
+## Notes
+
+Source file:  /usr/local/bin/gilfoyle/main.py
+Service file: /etc/systemd/system/gilfoyle.service
+Log file:     /var/log/gilfoyle.database.db
+

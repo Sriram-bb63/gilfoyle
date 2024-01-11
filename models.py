@@ -1,9 +1,13 @@
 from sqlalchemy import create_engine, Column, Integer, Date, Time, desc
 from sqlalchemy.orm import declarative_base
-
+import os
 
 # engine = create_engine('sqlite:////var/log/gilfoyle/database.db')
-engine = create_engine('sqlite:///database.db')
+dbPath = "database.db"
+if os.path.realpath(__file__) == "/usr/local/bin/gilfoyle/models.py":
+    dbPath = "/var/log/gilfoyle/database.db"
+engine = create_engine(f'sqlite:///{dbPath}')
+print(f"DB location: {dbPath}")
 
 Base = declarative_base()
 

@@ -6,7 +6,8 @@ from sqlalchemy import desc
 from sqlalchemy.orm import sessionmaker
 import json
 import sys
-from alert import alert
+import os
+# from alert import alert
 
 
 Session = sessionmaker(bind=engine)
@@ -14,7 +15,9 @@ session = Session()
 
 def loadConfig() -> dict:
     try:
-        with open("config.json", "r") as f:
+        # if os.path.realpath(__file__) == "/usr/local/bin/gilfoyle/main.py":
+        print(f"Config file: {os.path.dirname(__file__)}/config.json")
+        with open(f"{os.path.dirname(__file__)}/config.json", "r") as f:
             config = f.read()
         return json.loads(config)
     except FileNotFoundError:
@@ -38,7 +41,8 @@ def getRAM() -> int:
     # svmem(total=12291612672, available=9253584896, percent=24.7, used=2099912704, free=7342551040, active=869027840, inactive=2990780416, buffers=125169664, cached=2723979264, shared=612175872, slab=292745216)
     ramUsed = int(abs((ram.available * 100 / ram.total) - 100))
     if ramUsed > config.get("ramAlertLevel"):
-        alert(f"RAM used: {ramUsed}%")
+        # alert(f"RAM used: {ramUsed}%")
+        pass
     return ramUsed
 
 def getBatteryLevel() -> int:
@@ -46,7 +50,8 @@ def getBatteryLevel() -> int:
     # sbattery(percent=88.64661654135338, secsleft=12338, power_plugged=False)
     batteryLevel = int(round(battery.percent, 0))
     if batteryLevel < config.get("batteryAlertLevel"):
-        alert(f"Battery level: {batteryLevel}%")
+        # alert(f"Battery level: {batteryLevel}%")
+        pass
     return batteryLevel
 
 def getTemp() -> int:
@@ -54,7 +59,8 @@ def getTemp() -> int:
     # {'nvme': [shwtemp(label='Composite', current=31.85, high=81.85, critical=85.85), shwtemp(label='Sensor 1', current=31.85, high=65261.85, critical=65261.85)], 'coretemp': [shwtemp(label='Package id 0', current=71.0, high=100.0, critical=100.0), shwtemp(label='Core 0', current=71.0, high=100.0, critical=100.0), shwtemp(label='Core 1', current=59.0, high=100.0, critical=100.0)], 'dell_smm': [shwtemp(label='', current=58.0, high=None, critical=None), shwtemp(label='', current=38.0, high=None, critical=None), shwtemp(label='', current=40.0, high=None, critical=None)]}
     cpuTemp = int(temperatures["coretemp"][0].current) # shwtemp(label='Package id 0', current=71.0, high=100.0, critical=100.0)
     if cpuTemp > config.get("tempAlertLevel"):
-        alert(f"CPU temperature: {cpuTemp} C")
+        # alert(f"CPU temperature: {cpuTemp} C")
+        pass
     return cpuTemp
 
 def getFanRPM() -> int:
@@ -62,7 +68,8 @@ def getFanRPM() -> int:
     # {'dell_smm': [sfan(label='', current=0)]}
     fanRPM = fan["dell_smm"][0].current
     if fanRPM > config.get("rpmAlertLevel"):
-        alert(f"Fan RPM: {fanRPM}")
+        # alert(f"Fan RPM: {fanRPM}")
+        pass
     return fanRPM
 
 def collectData() -> Gilfoyle:
