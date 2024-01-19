@@ -13,19 +13,22 @@ import os
 Session = sessionmaker(bind=engine)
 session = Session()
 
+
 def loadConfig() -> dict:
     try:
-        # if os.path.realpath(__file__) == "/usr/local/bin/gilfoyle/main.py":
-        print(f"Config file: {os.path.dirname(__file__)}/config.json")
-        with open(f"{os.path.dirname(__file__)}/config.json", "r") as f:
-            config = f.read()
+        if os.path.realpath(__file__) == "/usr/local/bin/gilfoyle/main.py":
+            with open(f"/usr/local/etc/gilfoyle/config.json", "r") as f:
+                config = f.read()
+        else:
+            with open("config.json", "r") as f:
+                config = f.read()
         return json.loads(config)
     except FileNotFoundError:
         print("Config file does not exist at _____")
         print("Gilfoyle failed to start")
         sys.exit(0)
-
 config = loadConfig()
+
 
 def getSessionId() -> int:
     lastSession = session.query(Gilfoyle).order_by(desc(Gilfoyle.id)).limit(1).first()
@@ -33,8 +36,8 @@ def getSessionId() -> int:
         return lastSession.sessionId + 1
     else:
         return 1
-
 sessionId = getSessionId()
+
 
 def getRAM() -> int:
     ram = psutil.virtual_memory()
@@ -45,6 +48,7 @@ def getRAM() -> int:
         pass
     return ramUsed
 
+
 def getBatteryLevel() -> int:
     battery = psutil.sensors_battery()
     # sbattery(percent=88.64661654135338, secsleft=12338, power_plugged=False)
@@ -53,6 +57,7 @@ def getBatteryLevel() -> int:
         # alert(f"Battery level: {batteryLevel}%")
         pass
     return batteryLevel
+
 
 def getTemp() -> int:
     temperatures = psutil.sensors_temperatures()
@@ -63,6 +68,7 @@ def getTemp() -> int:
         pass
     return cpuTemp
 
+
 def getFanRPM() -> int:
     fan = psutil.sensors_fans()
     # {'dell_smm': [sfan(label='', current=0)]}
@@ -71,6 +77,7 @@ def getFanRPM() -> int:
         # alert(f"Fan RPM: {fanRPM}")
         pass
     return fanRPM
+
 
 def collectData() -> Gilfoyle:
     data = Gilfoyle(
@@ -85,9 +92,11 @@ def collectData() -> Gilfoyle:
     sleep(config.get("frequency", 2))
     return data
 
+
 def batchInsert(data: list) -> None:
     session.add_all(data)
     session.commit()
+
 
 def main():
     while True:

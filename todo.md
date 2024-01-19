@@ -13,16 +13,19 @@
 - [ ] Build data explorer application
 - [x] Alert during abnormal surges
 - [ ] Export data as excel/pdf?
-- [ ] ``data = pd.DataFrame.from_records([row.to_dict() for row in data])`` This is O(n). This will be a bottleneck when db becomes big
+- [x] ``data = pd.DataFrame.from_records([row.to_dict() for row in data])`` This is O(n). This will be a bottleneck when db becomes big
 - [x] Make a config file to define frequency, alert levels etc
 - [ ] README.md
 - [ ] About
 - [ ] Make it flexible. Test with dual fan system, other makes etc
 - [ ] Make alerts non blocking
-- [ ] gitignore is not working
+- [x] gitignore is not working
 - [ ] Write a script to keep the daemon upto date
 - [ ] Create a config python file to find own path
-- [ ] Move config.json to /etc/gilfoyle/config.json
+- [x] Move config.json to /etc/gilfoyle/config.json
+- [ ] Reconfirm feasability of using sqlite
+- [ ] Reconfirm feasability of using pd.df
+- [ ] Checkout other plotting libs like plotly
 
 ---
 
@@ -31,4 +34,12 @@
 Source file:  /usr/local/bin/gilfoyle/main.py
 Service file: /etc/systemd/system/gilfoyle.service
 Log file:     /var/log/gilfoyle.database.db
+Config file:  /usr/local/etc/gilfoyle/config.json
+
+
+1 row is ~45 bytes
+1000 bytes = 1kb; 1000kb = 1mb; 10,00,000 bytes in 1mb
+
+1h = 60min = 3600s
+3600 rows per hr = 3600*45 = 162000 bytes per hr = 162 kb per hr
 
