@@ -8,14 +8,14 @@
 - [x] Make requirements file for installation
 - [ ] Ship with environment?
 - [x] Push it to github
-- [ ] Installation and setup script
+- [x] Installation and setup script
 - [x] Add time column
 - [ ] Build data explorer application
 - [x] Alert during abnormal surges
 - [ ] Export data as excel/pdf?
 - [x] ``data = pd.DataFrame.from_records([row.to_dict() for row in data])`` This is O(n). This will be a bottleneck when db becomes big
 - [x] Make a config file to define frequency, alert levels etc
-- [ ] README.md
+- [x] README.md
 - [ ] About
 - [ ] Make it flexible. Test with dual fan system, other makes etc
 - [ ] Make alerts non blocking
@@ -26,6 +26,7 @@
 - [ ] Reconfirm feasability of using sqlite
 - [ ] Reconfirm feasability of using pd.df
 - [ ] Checkout other plotting libs like plotly
+- [ ] Rename to gilfoyled
 
 ---
 
