@@ -27,20 +27,5 @@
 - [ ] Reconfirm feasability of using pd.df
 - [ ] Checkout other plotting libs like plotly
 - [ ] Rename to gilfoyled
-
----
-
-## Notes
-
-Source file:  /usr/local/bin/gilfoyle/main.py
-Service file: /etc/systemd/system/gilfoyle.service
-Log file:     /var/log/gilfoyle.database.db
-Config file:  /usr/local/etc/gilfoyle/config.json
-
-
-1 row is ~45 bytes
-1000 bytes = 1kb; 1000kb = 1mb; 10,00,000 bytes in 1mb
-
-1h = 60min = 3600s
-3600 rows per hr = 3600*45 = 162000 bytes per hr = 162 kb per hr
-
+- [ ] Make service files etc
+- [ ] Alias graph
