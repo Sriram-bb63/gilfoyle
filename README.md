@@ -5,9 +5,10 @@
 This is a system logger named after a character from Silicon Valley. It logs RAM used (in %), battery level (in %), CPU temperature (in °C) and fan RPM. The time interval between each log can be changed in `config.json`->`'frequency'`.
 
 - Service file: ``/etc/systemd/system/gilfoyle.service``
-- Source file:  ``/usr/local/bin/gilfoyle/main.py``
+- Source file:  ``/usr/local/bin/gilfoyle/*``
 - Log file:     ``/var/log/gilfoyle/database.db``
 - Config file:  ``/usr/local/etc/gilfoyle/config.json``
+- Report file   ``~/Documents/gilfoyle/*.csv``
 
 ## Installtion
 
@@ -22,6 +23,8 @@ This is a system logger named after a character from Silicon Valley. It logs RAM
 4. ```sh
     systemctl status gilfoyle
     ```
+
+> Note: You might need to restart your terminal (or run ``~/.bashrc``) after using the deploy script for the first time.
 
 ## Updating the code
 
