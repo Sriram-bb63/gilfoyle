@@ -1,0 +1,9 @@
+[Unit]
+Description=Gilfoyle
+
+[Service]
+ExecStart=/usr/bin/python3 /usr/local/bin/gilfoyle/main.py
+Restart=always
+
+[Install]
+WantedBy=default.target

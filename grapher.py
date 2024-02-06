@@ -1,11 +1,13 @@
 import argparse
 import datetime
+
 import matplotlib.pyplot as plt
-from matplotlib.dates import DateFormatter
-from models import engine, Gilfoyle
-from sqlalchemy.orm import sessionmaker
 import pandas as pd
 import seaborn as sns
+from matplotlib.dates import DateFormatter
+from sqlalchemy.orm import sessionmaker
+
+from models import Gilfoyle, engine
 
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -59,13 +61,22 @@ def plot_subplots_seaborn(data):
     plt.show()
 
 
+def save_report(df):
+    from_date = df.loc[0, "DateTime"].strftime("%d-%m-%Y")
+    to_date = df.loc[len(df)-1, "DateTime"].strftime("%d-%m-%Y")
+    print(from_date, to_date)
+    filename = f"~/Documents/gilfoyle/report_from_{from_date}_to_{to_date}.csv"
+    df.to_csv(filename)
+    print(f"Report saved as {filename}")
+
+
 def main():
     parser = argparse.ArgumentParser(description='Gilfoyle grapher')
     parser.add_argument('--from', '-f', dest='from_date', type=str, help='Start date in DD-MM-YYYY format')
     parser.add_argument('--to', '-t', dest='to_date', type=str, help='End date in DD-MM-YYYY format')
-    parser.add_argument('--save', action='store_true', help='Save the report as ______')
-    
+    parser.add_argument('--save', dest='save_flag', action="store_true", help='Save the report as ______')
     args = parser.parse_args()
+
     if args.from_date and args.to_date:
         from_date = datetime.datetime.strptime(args.from_date, '%d-%m-%Y').date()
         to_date = datetime.datetime.strptime(args.to_date, '%d-%m-%Y').date()
@@ -76,7 +87,14 @@ def main():
     actual_data = fetch_data(from_date, to_date)
     df_actual = convert_to_dataframe(actual_data)
     print(df_actual)
-    plot_subplots_seaborn(df_actual)
+    
+    if args.save_flag:
+        save_report(df_actual)
+    
+    try:
+        plot_subplots_seaborn(df_actual)
+    except KeyboardInterrupt:
+        print("Keyboard interrupt - EXIT")
 
 
 if __name__ == '__main__':

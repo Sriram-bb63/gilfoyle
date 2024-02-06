@@ -27,5 +27,9 @@
 - [ ] Reconfirm feasability of using pd.df
 - [ ] Checkout other plotting libs like plotly
 - [ ] Rename to gilfoyled
-- [ ] Make service files etc
-- [ ] Alias graph
+- [x] Make service files etc
+- [x] Alias graph
+- [ ] Uninstall script
+- [ ] Remove milliseconds from db
+- [x] Save report
+- [ ] Save location in config

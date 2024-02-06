@@ -1,12 +1,15 @@
-import psutil
-from time import sleep
+import json
+import os
+import sys
 from datetime import datetime
-from models import engine, Gilfoyle
+from time import sleep
+
+import psutil
 from sqlalchemy import desc
 from sqlalchemy.orm import sessionmaker
-import json
-import sys
-import os
+
+from models import Gilfoyle, engine
+
 # from alert import alert
 
 
