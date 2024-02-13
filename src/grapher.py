@@ -1,5 +1,6 @@
 import argparse
 import datetime
+import sys
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -86,7 +87,10 @@ def main():
 
     actual_data = fetch_data(from_date, to_date)
     df_actual = convert_to_dataframe(actual_data)
-    print(df_actual)
+    if df_actual.empty:
+        print("Empty dataframe")
+        sys.exit()
+    print(">", df_actual)
     
     if args.save_flag:
         save_report(df_actual)

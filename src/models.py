@@ -1,3 +1,4 @@
+import sys
 from sqlalchemy import create_engine, Column, Integer, Date, Time, desc
 from sqlalchemy.orm import declarative_base
 import os
@@ -22,6 +23,7 @@ class Gilfoyle(Base):
     temperature = Column(Integer)
     rpm = Column(Integer)
 
+    # Not used but let it stay
     def to_dict(self):
         return {
             "id": self.id,
@@ -37,4 +39,9 @@ class Gilfoyle(Base):
     def __repr__(self):
         return f"Gilfoyle(id={self.id}, sessionId={self.sessionId}, date={self.date}, time={self.time}, ram={self.ram}, battery={self.battery}, temperature={self.temperature}, rpm={self.rpm})"
 
-Base.metadata.create_all(engine)
+try:
+    Base.metadata.create_all(engine)
+except Exception as e:
+    print("Failed to connect to DB")
+    print(e)
+    sys.exit()

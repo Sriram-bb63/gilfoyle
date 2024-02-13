@@ -1,6 +1,6 @@
 # gilfoyle
 
-![Gilfoyle from Silicon Valley](gilfoyle.webp)
+<div align="center"><img src="gilfoyle.webp" alt="Gilfoyle from Silicon Valley" width="500"/></div>
 
 This is a system logger named after a character from Silicon Valley. It logs RAM used (in %), battery level (in %), CPU temperature (in °C) and fan RPM. The time interval between each log can be changed in `config.json`->`'frequency'`.
 
@@ -18,13 +18,25 @@ This is a system logger named after a character from Silicon Valley. It logs RAM
     ```
 3. ```sh
     chmod +x ./deploy.sh
-    ./deploy.sh
+    sudo ./deploy.sh
     ```
 4. ```sh
     systemctl status gilfoyle
     ```
 
 > Note: You might need to restart your terminal (or run ``~/.bashrc``) after using the deploy script for the first time.
+
+## Configurations
+
+All configurations are meant to be stored at `config.json` file. For any changes to take place, you must do either of the following actions:
+
+1. Use the `deploy.sh` script. But doing so, the log will be broken but a backup will be saved.
+2. Use systemctl to restart the service:
+    ```sh
+    sudo systemctl restart gilfoyle
+    ```
+
+
 
 ## Updating the code
 

@@ -33,3 +33,6 @@
 - [ ] Remove milliseconds from db
 - [x] Save report
 - [ ] Save location in config
+- [x] Move actual code into src in this repo and change necessary paths
+- [x] Grapher throws error if db is empty. Catch it and handle it
+- [x] What prints "Empty Dataframe"
